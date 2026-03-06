@@ -1,12 +1,12 @@
-# Biblioteca de Referências de Design - Jobim
+# Design Reference Library - Jobim
 
-> Curadoria de 120+ sites do onepagelove.com organizados por categoria
+> Curated collection of 120+ sites from onepagelove.com organized by category
 
 ---
 
 ## Landing Pages (32 sites)
 
-| # | Nome | URL OnePageLove | Site Original |
+| # | Name | URL OnePageLove | Original Site |
 |---|------|-----------------|---------------|
 | 1 | EyeDrop | https://onepagelove.com/eyedrop | - |
 | 2 | Interface Craft | https://onepagelove.com/interface-craft | - |
@@ -45,7 +45,7 @@
 
 ## SaaS (24 sites)
 
-| # | Nome | URL OnePageLove | Site Original |
+| # | Name | URL OnePageLove | Original Site |
 |---|------|-----------------|---------------|
 | 1 | Outseta | https://onepagelove.com/outseta-memberstack-alternative | outseta.com |
 | 2 | Monologue | https://onepagelove.com/monologue | monologue.to |
