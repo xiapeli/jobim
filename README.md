@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src=".github/social-preview.png" alt="Jobim — AI Agent Orchestrator" width="100%">
+
 # Jobim
 
 **Multi-agent orchestrator for Claude Code — from idea to shipped product**
