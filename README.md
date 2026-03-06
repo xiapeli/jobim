@@ -1,156 +1,93 @@
-# Jobim 2.0 - Multi-Agent Orchestrator
+<div align="center">
 
-> Intelligent orchestrator that coordinates specialized AI agents in a hierarchical layer architecture.
+# Jobim
 
-## Layer Architecture
+**Multi-agent orchestrator for Claude Code — from idea to shipped product**
+
+[![MIT License](https://img.shields.io/badge/License-MIT-gold.svg?style=for-the-badge)](LICENSE)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-Skill-blue?style=for-the-badge)](https://claude.ai)
+[![Agents](https://img.shields.io/badge/Agents-8-green?style=for-the-badge)](.claude/agents/)
+[![Pipeline](https://img.shields.io/badge/Phases-5-purple?style=for-the-badge)]()
+
+*Named after Tom Jobim — like bossa nova harmonizes simplicity with complexity,
+Jobim orchestrates specialized AI agents to build complete applications.*
+
+[Install](#quick-start) · [Agents](#the-8-agents) · [Pipeline](#pipeline) · [PRD Loop](#autonomous-mode-prd-loop) · [Contributing](#contributing)
+
+</div>
+
+---
+
+## What It Does
+
+One prompt. Eight agents. Full-stack delivery.
+
+You describe what you want. Jobim (Claude Opus) breaks it into phases and delegates to 7 specialized sub-agents. Each agent has deep domain expertise, structured JSON contracts, and quality gates.
+
+No manual coordination. No context-switching. From idea to deployed product.
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  LAYER 0: USER                                              │
-│  → Provides high-level objective                            │
-└─────────────────────────────┬───────────────────────────────┘
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│  LAYER 1: JOBIM (Opus) - Orchestrator                       │
-│  → Plans, delegates, synthesizes, decides                   │
-│  → Maintains state in .jobim/state.json                     │
-│  → NEVER executes code, always delegates                    │
-└───────────┬─────────┬─────────┬─────────┬─────────┬─────────┘
-            ▼         ▼         ▼         ▼         ▼
-┌─────────────────────────────────────────────────────────────┐
-│  LAYER 2: SUBAGENTS (Haiku/Sonnet)                          │
-│                                                             │
-│  Scout     Builder   Tester    Designer  UXer     Shipper   │
-│  (Haiku)   (Sonnet)  (Sonnet)  (Sonnet)  (Sonnet) (Sonnet)  │
-│                                                             │
-│  → Execute specific tasks                                   │
-│  → Return structured output (JSON)                          │
-│  → Report status and blockers                               │
-└─────────────────────────────────────────────────────────────┘
+/jobim new "Create a task management SaaS with real-time collaboration"
 ```
 
-## Specialized Agents
+Jobim plans the work, delegates to Scout for market research, Builder for code, Designer for the design system, Tester for quality gates, and ships it.
 
-| Agent | Model | Specialty |
-|-------|-------|-----------|
-| **Jobim** | Opus | Orchestration, strategy, synthesis |
-| **Scout** | Haiku | Quick research, market analysis, feasibility |
-| **Builder** | Sonnet | Code, architecture, elite frontend implementation |
-| **Tester** | Sonnet | Code review, tests, security (OWASP) |
-| **Designer** | Sonnet | UI, design tokens, visual systems |
-| **UXer** | Sonnet | Flows, usability, Nielsen heuristics |
-| **Shipper** | Sonnet | Docker, CI/CD, deploy |
-| **Launcher** | Sonnet | README, marketing, launch |
+## Architecture
 
-## Development Pipeline
+```
+┌──────────────────────────────────────────────────────────────┐
+│  USER — provides high-level objective                        │
+└────────────────────────────┬─────────────────────────────────┘
+                             ▼
+┌──────────────────────────────────────────────────────────────┐
+│  JOBIM (Opus) — Orchestrator                                 │
+│  Plans, delegates, synthesizes, decides                      │
+│  Maintains state in .jobim/state.json                        │
+│  NEVER executes code — always delegates                      │
+└───────┬──────┬──────┬──────┬──────┬──────┬──────┬────────────┘
+        ▼      ▼      ▼      ▼      ▼      ▼      ▼
+┌──────────────────────────────────────────────────────────────┐
+│  SUBAGENTS (Haiku / Sonnet)                                  │
+│                                                              │
+│  Scout   Builder  Tester  Designer  UXer  Shipper  Launcher  │
+│  (Haiku) (Sonnet) (Sonnet) (Sonnet) (Sonnet) (Sonnet) (Sonnet) │
+│                                                              │
+│  Execute specific tasks → Return structured JSON             │
+└──────────────────────────────────────────────────────────────┘
+```
+
+## The 8 Agents
+
+| Agent | Model | What It Does |
+|-------|-------|-------------|
+| **Jobim** | Opus | Orchestrates the full pipeline. Plans, delegates, synthesizes results. Never writes code directly. |
+| **Scout** | Haiku | Market research, competitor analysis, tech stack recommendation, viability scoring |
+| **Builder** | Sonnet | Full-stack implementation — React, Next.js, APIs, databases, responsive layouts |
+| **Designer** | Sonnet | Design systems, HSL color tokens, typography scales, spacing, visual effects |
+| **UXer** | Sonnet | Flow analysis, friction audit, Nielsen heuristics, WCAG accessibility, conversion optimization |
+| **Tester** | Sonnet | Code review, OWASP security scan, test writing, quality gates |
+| **Shipper** | Sonnet | Docker configs, GitHub Actions CI/CD, deploy pipelines, monitoring |
+| **Launcher** | Sonnet | README generation, social posts (X/LinkedIn), Product Hunt copy, launch checklist |
+
+## Pipeline
+
+Five phases, each with dedicated agents and quality gates:
 
 ```
 Discovery → Prototype → Production → Ship → Launch
-   │            │            │          │        │
-   ▼            ▼            ▼          ▼        ▼
- Scout      Builder    Builder+     Shipper  Launcher
-                        Tester
+  Scout      Builder     Builder +    Shipper  Launcher
+  (Haiku)    (Sonnet)    Tester       (Sonnet) (Sonnet)
+                         (parallel)
 ```
 
-### Phases
+### State Tracking
 
-1. **Discovery** - Scout analyzes market, competitors and technical feasibility
-2. **Prototype** - Builder creates functional MVP
-3. **Production** - Builder refactors + Tester reviews in parallel
-4. **Design** (optional) - Designer + UXer improve the experience
-5. **Ship** - Shipper configures Docker, CI/CD, deploy
-6. **Launch** - Launcher creates README, social posts, marketing materials
-
-## Installation
-
-### 1. Copy to your project or global
-
-```bash
-# For global use
-cp -r .claude ~/.claude
-
-# Or for a specific project
-cp -r .claude /your/project/.claude
-```
-
-### 2. Restart Claude Code
-
-Claude Code will automatically detect the new commands.
-
-## Usage
-
-### Autonomous Mode (default)
-
-```bash
-/jobim new "Create a task management SaaS with authentication and dashboard"
-```
-
-Jobim executes the complete pipeline, stopping only when necessary.
-
-### Interactive Mode
-
-```bash
-/jobim new "Project description" interactive
-```
-
-Pauses after each phase for approval.
-
-### Status Commands
-
-```bash
-/jobim status    # View current state
-/jobim run design   # Execute specific phase
-/jobim reset     # Clear and restart
-```
-
-### Individual Agents
-
-```bash
-/scout "Research design system trends 2026"
-/builder "Create responsive landing page with animations"
-/designer "Create design system for meditation app"
-/uxer "Analyze onboarding flow"
-/tester "Review authentication module code"
-/shipper "Configure Docker and CI/CD for Next.js"
-/launcher "Create README and posts for Product Hunt"
-```
-
-## What's New in 2.0
-
-### Builder v2.0 - Elite Frontend Developer
-
-- **2026 Standards**: Bento grids, glass morphism, gradient mesh
-- **Advanced animations**: Framer Motion, GSAP, Lenis smooth scroll
-- **Accessibility**: WCAG 2.1 AA, prefers-reduced-motion
-- **Performance**: Optimized Core Web Vitals
-
-### Designer v2.0 - Design System Expert
-
-- **Design Tokens in JSON**: HSL colors, typography, spacing, shadows
-- **Visual Hierarchy**: Detailed specification per section
-- **Components**: Complete states (hover, focus, active, disabled)
-- **2026 Trends**: Documented and applied
-
-### UXer v2.0 - Nielsen Norman Consultant
-
-- **Laws of UX**: Hick, Fitts, Jakob, Miller, Tesler applied
-- **Heuristic Analysis**: 10 Nielsen heuristics with score
-- **Friction Taxonomy**: Cognitive, visual, motor, temporal, trust
-- **Prioritization**: P0/P1/P2 with effort vs impact
-
-## Project State
-
-Jobim maintains state in `.jobim/state.json`:
+Jobim persists state across the session in `.jobim/state.json`:
 
 ```json
 {
   "version": "2.0",
-  "project": { "name": "", "description": "" },
-  "phase": {
-    "current": "discovery",
-    "completed": [],
-    "history": []
-  },
+  "phase": { "current": "discovery", "completed": [], "history": [] },
   "context": {
     "discovery": null,
     "prototype": null,
@@ -163,118 +100,111 @@ Jobim maintains state in `.jobim/state.json`:
 }
 ```
 
-## Principles
+## Quick Start
 
-1. **Never execute, always delegate** - Jobim orchestrates, doesn't implement
-2. **Context is king** - Pass complete context to subagents
-3. **Persistent state** - Everything documented in state.json
-4. **Structured output** - Subagents return parseable JSON
-5. **Momentum over perfection** - Move forward and iterate > get stuck seeking perfection
+### Option 1: Install agents only (safe, non-destructive)
 
-## File Structure
+```bash
+git clone https://github.com/xiapeli/jobim.git
+cd jobim
 
-```
-.claude/
-├── commands/           # Slash commands (/jobim, /scout, etc.)
-│   ├── jobim.md       # Main orchestrator
-│   ├── scout.md       # Quick research
-│   ├── builder.md     # Elite development
-│   ├── designer.md    # Design systems
-│   ├── uxer.md        # UX analysis
-│   ├── tester.md      # QA and security
-│   ├── shipper.md     # DevOps
-│   └── launcher.md    # Marketing
-└── agents/            # Agent definitions
-    ├── jobim.md
-    ├── scout.md
-    ├── builder.md
-    ├── designer.md
-    ├── uxer.md
-    ├── tester.md
-    ├── shipper.md
-    └── launcher.md
+# Copy agents and commands (won't overwrite existing files)
+mkdir -p ~/.claude/agents ~/.claude/commands
+cp -n .claude/agents/*.md ~/.claude/agents/
+cp -n .claude/commands/*.md ~/.claude/commands/
 ```
 
-## External References & Best Practices
+### Option 2: Full install with settings
 
-Jobim follows excellence standards based on:
+```bash
+git clone https://github.com/xiapeli/jobim.git
+cd jobim
 
-### Anthropic Resources
-- **[Engineering at Anthropic](https://www.anthropic.com/engineering)** - Reliable AI systems design
-- **[Claude Code](https://github.com/anthropics/claude-code)** - Agentic coding patterns
-- **[Anthropic Cookbook](https://github.com/anthropics/anthropic-cookbook)** - Recipes for Claude usage
+# Back up your existing config first
+[ -d ~/.claude ] && cp -r ~/.claude ~/.claude.backup.$(date +%s)
 
-### Multi-Agent Patterns Applied
-
-| Pattern | Description | Used in Jobim |
-|---------|-------------|---------------|
-| **Supervisor** | Central coordinator | Jobim (Opus) |
-| **Chain** | Sequential processing | Discovery → Prototype → Production |
-| **Parallel Analysis** | Concurrent specialists | Builder + Tester |
-| **Contract-based** | Structured JSON outputs | All subagents |
-| **Quality Gates** | Phase validation | Each phase transition |
-
-### Claude Code Patterns
-
-```
-┌────────────────────────────────────────────────────────────┐
-│  LAYER HIERARCHY                                           │
-├────────────────────────────────────────────────────────────┤
-│  LAYER 0 │ User (high-level objective)                     │
-│  LAYER 1 │ Jobim/Opus (orchestrates, never executes)       │
-│  LAYER 2 │ Subagents/Haiku+Sonnet (execute tasks)          │
-└────────────────────────────────────────────────────────────┘
-
-┌────────────────────────────────────────────────────────────┐
-│  MODEL PER TASK                                            │
-│                                                            │
-│  Scout (Haiku)     → Quick research, low cost              │
-│  Builder (Sonnet)  → Implementation, code                  │
-│  Tester (Sonnet)   → Review, validation                    │
-│  Jobim (Opus)      → Strategy, synthesis, decisions        │
-└────────────────────────────────────────────────────────────┘
+# Install everything
+mkdir -p ~/.claude/agents ~/.claude/commands
+cp .claude/agents/*.md ~/.claude/agents/
+cp .claude/commands/*.md ~/.claude/commands/
+cp .claude/settings.json ~/.claude/settings.json
 ```
 
-### State Machine Pattern
+### Usage
 
+```bash
+# Full autonomous pipeline
+/jobim new "Create a task management SaaS"
+
+# Interactive mode — pause for approval at each phase
+/jobim new "Create a meditation app" interactive
+
+# Run a specific phase only
+/jobim run design
+
+# Check progress
+/jobim status
+
+# Use individual agents directly
+/scout "Research design system trends 2026"
+/builder "Create a responsive landing page"
+/designer "Design system for a fitness app"
+/tester "Review the auth module for security issues"
 ```
-Discovery ──► Prototype ──► Production ──► Ship ──► Launch
-    │             │             │           │          │
-    ▼             ▼             ▼           ▼          ▼
- .jobim/      .jobim/       .jobim/     .jobim/    .jobim/
- state.json   state.json    state.json  state.json state.json
+
+## Autonomous Mode (PRD Loop)
+
+Jobim includes a PRD-driven autonomous loop based on the [Ralph Pattern](https://ghuntley.com/specs/). Define user stories in a `prd.json`, and Jobim implements them one by one:
+
+```bash
+cd prd-loop
+cp prd.json.example prd.json  # edit with your user stories
+./jobim-loop.sh 10            # run up to 10 iterations
 ```
 
-### Memory Patterns
+Each iteration:
+1. Reads the PRD and progress log
+2. Implements the next incomplete user story
+3. Commits the work
+4. Updates the progress file
+5. Stops when all stories pass or max iterations reached
 
-**Short-term (Session)**:
-- `.jobim/state.json` - Current project state
+> **Note:** The PRD loop uses `--dangerously-skip-permissions` to run without interactive prompts. This allows fully autonomous operation but gives Claude unrestricted tool access. Review the [prompt.md](prd-loop/prompt.md) before running.
 
-**Long-term (Project)**:
-- `context` per phase - Accumulated outputs
-- `decisions` - Decision history
-- `artifacts` - Generated artifacts
+## Design Library
 
-### External Resources
+Jobim includes a curated design library with:
+- **159 reference screenshots** from award-winning sites
+- **Curated references** organized by category (SaaS, portfolio, e-commerce, etc.)
+- **Design system patterns** extracted from top implementations
 
-- **Anthropic Engineering**: https://www.anthropic.com/engineering
-- **Claude Code**: https://github.com/anthropics/claude-code
-- **AI Agents Topic**: https://github.com/topics/ai-agents
-- **LangGraph Patterns**: https://github.com/langchain-ai/langgraph
+See [`design-library/`](design-library/) for the full collection.
 
----
+## Contract System
+
+Every agent follows structured contracts:
+- **Input contract**: Required and optional parameters with types
+- **Output contract**: JSON schema defining the response format
+- **Quality gates**: Conditions that must pass before Jobim accepts the output
+
+When a quality gate fails, Jobim retries (up to 3 times), then escalates with full context.
+
+## Requirements
+
+- [Claude Code](https://claude.ai) with API access
+- Claude Opus for the orchestrator (Jobim agent)
+- Claude Sonnet/Haiku for sub-agents
 
 ## Contributing
 
-Pull requests are welcome! For significant changes, please open an issue first.
+Contributions welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+Ideas for contributions:
+- New specialized agents (e.g., Analytics, Copywriter, SEO)
+- Additional design library references
+- Language translations for agent prompts
+- Example PRDs for common project types
 
 ## License
 
-MIT
-
----
-
-**Version:** 2.1.0
-**Updated:** 2026-01-26
-
-*Inspired by Tom Jobim's Bossa Nova philosophy: simplicity, harmony, rhythm, and intelligent adaptation.*
+[MIT](LICENSE) — Phelipe Xavier, 2026

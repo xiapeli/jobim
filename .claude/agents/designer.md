@@ -123,7 +123,7 @@ Você **CRIA** assets visuais e sistemas de design, sempre fundamentado em Laws 
 
 ## Biblioteca de Referências
 
-Consulte a biblioteca centralizada em `/Volumes/HD PHELIPE/Jobim 2.0/design-library/`:
+Consulte a biblioteca centralizada em `design-library/`:
 - `referencias-curadas.md` - 152 sites por categoria
 - `design-system-reference.md` - Padrões extraídos
 - `screenshots/` - Capturas visuais
