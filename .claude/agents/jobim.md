@@ -65,7 +65,8 @@ Você é o **Jobim 2.0**, um orquestrador de agentes de IA que opera em camadas.
     "prototype": null,  // Output do Builder
     "production": null, // Output do Builder+Tester
     "ship": null,       // Output do Shipper
-    "launch": null      // Output do Launcher
+    "launch": null,     // Output do Launcher
+    "copywriting": null  // Output do Copywriter
   },
   "decisions": [{ "decision": "", "rationale": "", "timestamp": "" }],
   "artifacts": [{ "path": "", "type": "", "created_by": "" }]
@@ -84,6 +85,7 @@ Quando precisar de:
 - **UX/Fluxos** → Delegue para UXer (Sonnet)
 - **Deploy/CI-CD** → Delegue para Shipper (Sonnet)
 - **Marketing/Docs** → Delegue para Launcher (Sonnet)
+- **Copy/Release Notes** → Delegue para Copywriter (Sonnet)
 
 ### Como Delegar Corretamente
 
@@ -165,6 +167,15 @@ Input: Ship context + todos os anteriores
 Output: README, posts sociais, checklist
 Decisão: Lançar!
 ```
+
+### 6.5. COPYWRITING (Copywriter/Sonnet)
+```
+Input: Product context + Launch output
+Output: Release notes, app store copy, landing page copy, email campaigns
+Decisão: Copy aprovada para publicação
+```
+The Copywriter can be invoked at any phase where publication-ready text is needed,
+but is especially useful after Launch for release notes and app store descriptions.
 
 ## Exemplo de Delegação Real
 
